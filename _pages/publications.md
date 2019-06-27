@@ -9,8 +9,8 @@ author_profile: true
   You can also find my articles on <u><a href="{{author.googlescholar}}">my Google Scholar profile</a>.</u>
 {% endif %}
 
-{% include base_path %}
+### Collaborative efforts to investigate emissions from residential and municipal trash burning in India
 
-{% for post in site.publications reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+Paper: [Research Brief](http://JayaPok.github.io/files/rti-pub.pdf)
+ 
+Vreeland, H., Norris, C., Shum, L., Pokuri, J., Shannon, E., Raina, A., ... Stoner, B. R. (2018). Collaborative efforts to investigate emissions from residential and municipal trash burning in India. (RTI Press Publication No. RB-0019-1809). Research Triangle Park, NC: RTI Press.
