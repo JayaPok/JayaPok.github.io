@@ -1,15 +1,10 @@
 ---
-title: "Paper Title Number 1"
+title: "Collaborative efforts to investigate emissions from residential and municipal trash burning in India"
 collection: publications
-permalink: /publication/2009-10-01-paper-title-number-1
-excerpt: 'This paper is about the number 1. The number 2 is left for future work.'
-date: 2009-10-01
-venue: 'Journal 1'
-paperurl: 'http://academicpages.github.io/files/paper1.pdf'
-citation: 'Your Name, You. (2009). &quot;Paper Title Number 1.&quot; <i>Journal 1</i>. 1(1).'
+permalink: /publication/rti-pub
+excerpt: ''
+date: 2018-09-01
+venue: 'RTI Press'
+paperurl: 'http://JayaPok.github.io/files/rti-pub.pdf'
+citation: 'Vreeland, H., Norris, C., Shum, L., Pokuri, J., Shannon, E., Raina, A., ... Stoner, B. R. (2018). Collaborative efforts to investigate emissions from residential and municipal trash burning in India. (RTI Press Publication No. RB-0019-1809). Research Triangle Park, NC: RTI Press.'
 ---
-This paper is about the number 1. The number 2 is left for future work.
-
-[Download paper here](http://academicpages.github.io/files/paper1.pdf)
-
-Recommended citation: Your Name, You. (2009). "Paper Title Number 1." <i>Journal 1</i>. 1(1).
