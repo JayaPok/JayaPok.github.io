@@ -1,4 +1,8 @@
-
+---
+title: "pima indians"
+excerpt: "hmm"
+collection: portfolio
+---
 
 ```python
 import pandas as pd
