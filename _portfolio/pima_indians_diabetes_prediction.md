@@ -1,4 +1,8 @@
-
+---
+title: "Pima Indians Diabetes Prediction"
+excerpt: "Developed a machine learning model to predict if patients have or don't have diabetes using various diagnostic metrics. "
+collection: portfolio
+---
 
 ```python
 import pandas as pd
