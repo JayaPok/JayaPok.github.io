@@ -274,8 +274,6 @@ plt.show()
 ```
 
 
-#![](output_7_0.png)
-
 
 
 ```python
@@ -289,8 +287,6 @@ plt.show()
 ```
 
 
-#![png](output_8_0.png)
-
 
 
 ```python
@@ -301,8 +297,6 @@ sns.heatmap(diabetes_data[diabetes_data.columns[:8]].corr(), annot=True)
 plt.show()
 ```
 
-
-#![png](output_9_0.png)
 
 
 ### Basic Model Implementation
@@ -800,8 +794,6 @@ sns.heatmap(X_train_selected.corr(), annot=True)
 plt.show()
 ```
 
-
-#![png](output_32_0.png)
 
 
 
