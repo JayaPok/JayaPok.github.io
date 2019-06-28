@@ -1,8 +1,6 @@
 ---
 title: "Pima Indians Diabetes Prediction"
 excerpt: "test"
-permalink: /projects/
-author_profile: true
 ---
 
 ```python
