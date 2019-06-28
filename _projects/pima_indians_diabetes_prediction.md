@@ -274,7 +274,7 @@ plt.show()
 ```
 
 
-![png](output_7_0.png)
+#![](output_7_0.png)
 
 
 
@@ -289,7 +289,7 @@ plt.show()
 ```
 
 
-![png](output_8_0.png)
+#![png](output_8_0.png)
 
 
 
@@ -302,7 +302,7 @@ plt.show()
 ```
 
 
-![png](output_9_0.png)
+#![png](output_9_0.png)
 
 
 ### Basic Model Implementation
@@ -801,7 +801,7 @@ plt.show()
 ```
 
 
-![png](output_32_0.png)
+#![png](output_32_0.png)
 
 
 
