@@ -1,4 +1,7 @@
-
+---
+title: "Pima Indians Diabetes Prediction"
+collection: portfolio
+---
 
 ```python
 import pandas as pd
