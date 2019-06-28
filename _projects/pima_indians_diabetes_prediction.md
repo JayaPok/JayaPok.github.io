@@ -1,5 +1,6 @@
 ---
 title: "Pima Indians Diabetes Prediction"
+excerpt: "test"
 collection: projects
 ---
 
