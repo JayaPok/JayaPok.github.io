@@ -1,6 +1,6 @@
 ---
 title: "Pima Indians Diabetes Prediction"
-collection: portfolio
+collection: projects
 ---
 
 ```python
