@@ -1,7 +1,7 @@
 ----
-title: "Pima Indians Diabetes Prediction"	
-excerpt: "Developed a machine learning model that uses various diagnostic metrics to predict if patients have diabetes or not."	
-collection: portfolio
+-title: "Pima Indians Diabetes Prediction"	
+-excerpt: "Developed a machine learning model that uses various diagnostic metrics to predict if patients have diabetes or not."	
+-collection: portfolio
 ----
 
 This post contains my work in predicting whether a patient has diabetes or not based on various diagnostic metrics. The patients studied are females of Pima Indian heritage and at least 21 years old. 
