@@ -1,10 +1,13 @@
----
-title: "Pima Indians Diabetes Prediction"
-excerpt: "Developed a machine learning model that uses various diagnostic metrics to predict if patients have diabetes or not."
-collection: portfolio
----
+
+This post contains my work in predicting whether a patient has diabetes or not based on various diagnostic metrics. The patients studied are females of Pima Indian heritage and at least 21 years old. 
+
+Through my work, I was able to predict diabetes at an accuracy of approximately 80%.
+
+The dataset is provided by the National Institute of Diabetes and Digestive and Kidney Diseases. For more information and to download the dataset, the following link can be accessed https://www.kaggle.com/uciml/pima-indians-diabetes-database. To download my jupyter notebook, the following link can be accessed https://github.com/JayaPok/Pima-Indians-Diabetes.
+
 
 ```python
+#import libraries 
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -19,13 +22,26 @@ diabetes_data = pd.read_csv("pima-indians-diabetes-database/diabetes.csv")
 diabetes_data = diabetes_data.astype(float)
 ```
 
+### Create training and test set
+
+Creating a test set that will only be used to test models built. The test set will not be examined prior to this.
+
+
+```python
+# Create training and test data
+from sklearn.model_selection import train_test_split
+
+X_train_init, X_test_init = train_test_split(diabetes_data, test_size = 0.2, random_state = 1)
+```
+
 ### Exploratory Data Analysis
+
+The tables below help get an initial view of the training data and the diagnostic measurements we're working with. From this we can see that there are metrics which are all floats. In addition, although it appears as though there are no null values, the null values for a few of the metrics are most likely replaced with 0. This is because the second table shows the minimum values for Glucose, Blood Pressure, Skin Thickness, Insulin, and BMI to be 0 which isn't possible.
 
 
 ```python
 # View of Data
-
-diabetes_data.head()
+X_train_init.head()
 ```
 
 
@@ -49,64 +65,64 @@ diabetes_data.head()
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>6.0</td>
-      <td>148.0</td>
-      <td>72.0</td>
-      <td>35.0</td>
-      <td>0.0</td>
-      <td>33.6</td>
-      <td>0.627</td>
-      <td>50.0</td>
+      <th>663</th>
+      <td>9.0</td>
+      <td>145.0</td>
+      <td>80.0</td>
+      <td>46.0</td>
+      <td>130.0</td>
+      <td>37.9</td>
+      <td>0.637</td>
+      <td>40.0</td>
       <td>1.0</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>1.0</td>
-      <td>85.0</td>
-      <td>66.0</td>
-      <td>29.0</td>
+      <th>712</th>
+      <td>10.0</td>
+      <td>129.0</td>
+      <td>62.0</td>
+      <td>36.0</td>
       <td>0.0</td>
-      <td>26.6</td>
-      <td>0.351</td>
-      <td>31.0</td>
+      <td>41.2</td>
+      <td>0.441</td>
+      <td>38.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>7.0</td>
+      <td>102.0</td>
+      <td>74.0</td>
+      <td>40.0</td>
+      <td>105.0</td>
+      <td>37.2</td>
+      <td>0.204</td>
+      <td>45.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>509</th>
       <td>8.0</td>
-      <td>183.0</td>
+      <td>120.0</td>
+      <td>78.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>25.0</td>
+      <td>0.409</td>
       <td>64.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>23.3</td>
-      <td>0.672</td>
-      <td>32.0</td>
-      <td>1.0</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>1.0</td>
-      <td>89.0</td>
-      <td>66.0</td>
-      <td>23.0</td>
-      <td>94.0</td>
-      <td>28.1</td>
-      <td>0.167</td>
-      <td>21.0</td>
+      <th>305</th>
+      <td>2.0</td>
+      <td>120.0</td>
+      <td>76.0</td>
+      <td>37.0</td>
+      <td>105.0</td>
+      <td>39.7</td>
+      <td>0.215</td>
+      <td>29.0</td>
       <td>0.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.0</td>
-      <td>137.0</td>
-      <td>40.0</td>
-      <td>35.0</td>
-      <td>168.0</td>
-      <td>43.1</td>
-      <td>2.288</td>
-      <td>33.0</td>
-      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -117,8 +133,7 @@ diabetes_data.head()
 
 ```python
 # Column Stats
-
-diabetes_data.describe()
+X_train_init.describe()
 ```
 
 
@@ -143,39 +158,39 @@ diabetes_data.describe()
   <tbody>
     <tr>
       <th>count</th>
-      <td>768.000000</td>
-      <td>768.000000</td>
-      <td>768.000000</td>
-      <td>768.000000</td>
-      <td>768.000000</td>
-      <td>768.000000</td>
-      <td>768.000000</td>
-      <td>768.000000</td>
-      <td>768.000000</td>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>614.000000</td>
+      <td>614.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>3.845052</td>
-      <td>120.894531</td>
-      <td>69.105469</td>
-      <td>20.536458</td>
-      <td>79.799479</td>
-      <td>31.992578</td>
-      <td>0.471876</td>
-      <td>33.240885</td>
-      <td>0.348958</td>
+      <td>3.866450</td>
+      <td>121.257329</td>
+      <td>68.861564</td>
+      <td>19.820847</td>
+      <td>79.035831</td>
+      <td>31.832410</td>
+      <td>0.463795</td>
+      <td>33.298046</td>
+      <td>0.346906</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>3.369578</td>
-      <td>31.972618</td>
-      <td>19.355807</td>
-      <td>15.952218</td>
-      <td>115.244002</td>
-      <td>7.884160</td>
-      <td>0.331329</td>
-      <td>11.760232</td>
-      <td>0.476951</td>
+      <td>3.387687</td>
+      <td>31.660602</td>
+      <td>19.738636</td>
+      <td>15.859718</td>
+      <td>116.585553</td>
+      <td>7.630488</td>
+      <td>0.327362</td>
+      <td>11.810249</td>
+      <td>0.476373</td>
     </tr>
     <tr>
       <th>min</th>
@@ -185,7 +200,7 @@ diabetes_data.describe()
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>0.078000</td>
+      <td>0.084000</td>
       <td>21.000000</td>
       <td>0.000000</td>
     </tr>
@@ -196,8 +211,8 @@ diabetes_data.describe()
       <td>62.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>27.300000</td>
-      <td>0.243750</td>
+      <td>27.000000</td>
+      <td>0.244250</td>
       <td>24.000000</td>
       <td>0.000000</td>
     </tr>
@@ -206,35 +221,35 @@ diabetes_data.describe()
       <td>3.000000</td>
       <td>117.000000</td>
       <td>72.000000</td>
-      <td>23.000000</td>
-      <td>30.500000</td>
-      <td>32.000000</td>
-      <td>0.372500</td>
+      <td>22.000000</td>
+      <td>16.500000</td>
+      <td>31.950000</td>
+      <td>0.361500</td>
       <td>29.000000</td>
       <td>0.000000</td>
     </tr>
     <tr>
       <th>75%</th>
       <td>6.000000</td>
-      <td>140.250000</td>
+      <td>141.000000</td>
       <td>80.000000</td>
       <td>32.000000</td>
-      <td>127.250000</td>
-      <td>36.600000</td>
-      <td>0.626250</td>
+      <td>125.000000</td>
+      <td>36.375000</td>
+      <td>0.596500</td>
       <td>41.000000</td>
       <td>1.000000</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>17.000000</td>
-      <td>199.000000</td>
+      <td>15.000000</td>
+      <td>198.000000</td>
       <td>122.000000</td>
       <td>99.000000</td>
       <td>846.000000</td>
       <td>67.100000</td>
-      <td>2.420000</td>
-      <td>81.000000</td>
+      <td>2.329000</td>
+      <td>72.000000</td>
       <td>1.000000</td>
     </tr>
   </tbody>
@@ -246,76 +261,77 @@ diabetes_data.describe()
 
 ```python
 # Look for Null Values
-
-diabetes_data.info()
+X_train_init.info()
 ```
 
     <class 'pandas.core.frame.DataFrame'>
-    RangeIndex: 768 entries, 0 to 767
+    Int64Index: 614 entries, 663 to 37
     Data columns (total 9 columns):
-    Pregnancies                 768 non-null float64
-    Glucose                     768 non-null float64
-    BloodPressure               768 non-null float64
-    SkinThickness               768 non-null float64
-    Insulin                     768 non-null float64
-    BMI                         768 non-null float64
-    DiabetesPedigreeFunction    768 non-null float64
-    Age                         768 non-null float64
-    Outcome                     768 non-null float64
+    Pregnancies                 614 non-null float64
+    Glucose                     614 non-null float64
+    BloodPressure               614 non-null float64
+    SkinThickness               614 non-null float64
+    Insulin                     614 non-null float64
+    BMI                         614 non-null float64
+    DiabetesPedigreeFunction    614 non-null float64
+    Age                         614 non-null float64
+    Outcome                     614 non-null float64
     dtypes: float64(9)
-    memory usage: 54.1 KB
+    memory usage: 48.0 KB
     
+
+The histograms below show the distributions of each of the metrics. The Outcomes histogram shows that there is approximately twice as many patients without diabetes than with diabetes in the training data. The spikes at 0 for Glucose, Blood Pressure, Skin Thickness, Insulin, and BMI support that nulls for these metrics are replaced with 0.
 
 
 ```python
 # Histograms
-
-diabetes_data.hist(figsize=(10, 15), edgecolor = 'black', grid = False, bins = 20)
+X_train_init.hist(figsize=(10, 15), edgecolor = 'black', grid = False, bins = 20)
 plt.show()
 ```
 
 
-![png](output_7_0.png)
+![png](output_12_0.png)
 
+
+Constructing pair plots for each pair of features and for each outcome (diabetes or no diabetes) is a good technique for visualizing the training data as can be seen below. Although there is no pair of features that indicates a clear difference between patients with and without diabetes, we can start to see some of what the most useful metrics may be. 
+
+Looking at the distributions along the diagonal, Age and Glucose stand out as the features with the greatest difference in distribution by outcome. Looking further at the pair plots, metrics with BMI or Glucose as one of the axes seem to indicate notable differences by outcome. 
 
 
 ```python
 # Pair Plots 
+X_train_init_noNA = X_train_init.dropna()
 
-diabetes_data_noNA = diabetes_data.dropna()
-
-sns.pairplot(diabetes_data_noNA, hue = 'Outcome', vars = ['Age', 'BMI', 'BloodPressure', 'DiabetesPedigreeFunction', \
+sns.pairplot(X_train_init_noNA, hue = 'Outcome', vars = ['Age', 'BMI', 'BloodPressure', 'DiabetesPedigreeFunction', \
                                                     'Glucose', 'Insulin', 'Pregnancies'], dropna = True)
 plt.show()
 ```
 
 
-![png](output_8_0.png)
+![png](output_14_0.png)
 
+
+Constructing a correlation matrix is a good technique of visualizing the relationship between variables to check for multicollinearity. As seen below, none of the variables are highly correlated with each other so we won't remove any of them.
 
 
 ```python
 # Correlation Matrix
-
 plt.figure(figsize=(10, 8))
-sns.heatmap(diabetes_data[diabetes_data.columns[:8]].corr(), annot=True)
+sns.heatmap(X_train_init[X_train_init.columns[:8]].corr(), annot=True)
 plt.show()
 ```
 
 
-![png](output_9_0.png)
+![png](output_16_0.png)
 
 
 ### Basic Model Implementation
 
+Initially we can try implementing a few models without doing any feature engineering or selection just to see what accuracy we get. Since we want to minimize the number of times we use the test set, 5-fold cross validation is performed to judge the accuracy of each model
+
 
 ```python
-# Create training and test data
-
-from sklearn.model_selection import train_test_split
-
-X_train_init, X_test_init = train_test_split(diabetes_data, test_size = 0.2, random_state = 1)
-
+# Separate outcomes from features
 y_train = X_train_init.Outcome
 X_train = X_train_init.drop("Outcome", axis = 1)
 
@@ -326,7 +342,6 @@ X_test = X_test_init.drop("Outcome", axis = 1)
 
 ```python
 # Try Different Models
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import ExtraTreesClassifier
@@ -357,31 +372,31 @@ for i, model in enumerate(models):
     Cross validation:
     Logistic Regression :  0.765487568413
     Naive Bayes :  0.749253201945
-    Random Forest :  0.757357057177
-    Extra Trees :  0.742669168892
+    Random Forest :  0.758956632401
+    Extra Trees :  0.73945690541
     XGBoost :  0.737778222045
     
+
+From performing cross validation with each model, we can see that logistic regression performed the best so we will use a logistic model on the test set.
 
 
 ```python
 from sklearn import metrics
 
 print("Test Set:")
-for i, model in enumerate(models):
-    predictions = model.fit(X_train, y_train).predict(X_test)
-    accuracy = metrics.accuracy_score(y_test, predictions)
-    print(model_names[i], ": ", accuracy)
+predictions = LogisticRegression(solver = 'liblinear').fit(X_train, y_train).predict(X_test)
+print("Accuracy: ", round(metrics.accuracy_score(y_test, predictions) * 100, 1), "%")
 ```
 
     Test Set:
-    Logistic Regression :  0.779220779221
-    Naive Bayes :  0.772727272727
-    Random Forest :  0.792207792208
-    Extra Trees :  0.746753246753
-    XGBoost :  0.798701298701
+    Accuracy:  77.9 %
     
 
+Approximately 78% accuracy from a very basic model implementation, not bad! But let's see if we can do better.
+
 ### Impute Missing Values
+
+The first step we want to take is to impute the null values for Glucose, Blood Pressure, Skin Thickness, Insulin, and BMI. The method chosen to do this is to replace null values with the median value of the outcome the respective patient is most likely to have. 
 
 
 ```python
@@ -393,73 +408,35 @@ X_train_init_null[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI'
     
 X_test_init_null[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']] = \
     X_test_init_null[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].replace(0, np.NaN)
-    
-
-#X_train_init_null[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']] = \
-#X_train_init_null[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']].apply(np.log)
-
-#X_test_init_null[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']] = \
-#X_test_init_null[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']].apply(np.log)
 ```
+
+As seen below, the median values of the metrics for patients with diabetes are all higher than for patients without diabetes, so we want to try to avoid imputing missing values with overall medians.
 
 
 ```python
 # Impute missing values
-
 diabetes_median = X_train_init_null[X_train_init_null.Outcome == 1]\
     [['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].median()
-    
-diabetes_mean = X_train_init_null[X_train_init_null.Outcome == 1]\
-    [['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].mean()
-    
-diabetes_std = X_train_init_null[X_train_init_null.Outcome == 1]\
-    [['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].std()
     
 
 no_diabetes_median = X_train_init_null[X_train_init_null.Outcome == 0]\
     [['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].median()
     
-no_diabetes_mean = X_train_init_null[X_train_init_null.Outcome == 0]\
-    [['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].mean()
-    
-no_diabetes_std = X_train_init_null[X_train_init_null.Outcome == 0]\
-    [['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']].std()
-    
     
 print("Median of People with Diabetes:")
 print(diabetes_median, '\n')
-
-print("Mean of People with Diabetes:")
-print(diabetes_mean, '\n')
-
-print("Standard Deviation of People with Diabetes:")
-print(diabetes_std, '\n')
 
 
 print("Median of People without Diabetes:")
 print(no_diabetes_median, '\n')
 
-print("Mean of People without Diabetes:")
-print(no_diabetes_mean, '\n')
-
-print("Standard Deviation of People without Diabetes:")
-print(no_diabetes_std, '\n')
-
     
 print("Difference Between Medians of People with and without Diabetes:")
 print(diabetes_median - no_diabetes_median, '\n')
 
-print("Difference Between Mean of People with and without Diabetes:")
-print(diabetes_mean - no_diabetes_mean)
 
 diabetes_median_array = np.array(diabetes_median)
 no_diabetes_median_array = np.array(no_diabetes_median)
-
-diabetes_mean_array = np.array(diabetes_mean)
-no_diabetes_mean_array = np.array(no_diabetes_mean)
-
-diabetes_std_array = np.array(diabetes_std)
-no_diabetes_std_array = np.array(no_diabetes_std)
 ```
 
     Median of People with Diabetes:
@@ -470,44 +447,12 @@ no_diabetes_std_array = np.array(no_diabetes_std)
     BMI               34.3
     dtype: float64 
     
-    Mean of People with Diabetes:
-    Glucose          142.032864
-    BloodPressure     74.828283
-    SkinThickness     32.338129
-    Insulin          212.466019
-    BMI               35.074408
-    dtype: float64 
-    
-    Standard Deviation of People with Diabetes:
-    Glucose           29.710773
-    BloodPressure     12.861654
-    SkinThickness     10.307978
-    Insulin          132.670225
-    BMI                6.465322
-    dtype: float64 
-    
     Median of People without Diabetes:
     Glucose          107.0
     BloodPressure     70.0
     SkinThickness     27.0
     Insulin           95.0
     BMI               30.1
-    dtype: float64 
-    
-    Mean of People without Diabetes:
-    Glucose          111.052764
-    BloodPressure     70.968992
-    SkinThickness     27.024648
-    Insulin          129.970732
-    BMI               30.667677
-    dtype: float64 
-    
-    Standard Deviation of People without Diabetes:
-    Glucose           25.086143
-    BloodPressure     12.463587
-    SkinThickness      9.941672
-    Insulin          105.244250
-    BMI                6.572938
     dtype: float64 
     
     Difference Between Medians of People with and without Diabetes:
@@ -518,14 +463,9 @@ no_diabetes_std_array = np.array(no_diabetes_std)
     BMI               4.2
     dtype: float64 
     
-    Difference Between Mean of People with and without Diabetes:
-    Glucose          30.980100
-    BloodPressure     3.859291
-    SkinThickness     5.313482
-    Insulin          82.495288
-    BMI               4.406731
-    dtype: float64
     
+
+The function below acts to identify whether a patient is most likely to have diabetes or not by looking at differences of metrics with the two sets of medians calculated above and then replacing null values with the most likely median. Since this technique doesn't use Outcome in the imputation, there will be some error of imputation in the training set. However, we will consequently be able to use this technique for imputation of the test set.
 
 
 ```python
@@ -536,7 +476,6 @@ X_test_null = X_test_init_null.drop("Outcome", axis = 1)
 
 ```python
 def impute_nan(input_row):
-    
     input_row_short = input_row[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']]
     missing_indexes = np.argwhere(np.isnan(input_row_short))
 
@@ -552,11 +491,9 @@ def impute_nan(input_row):
     if min_dist == euclidean_diabetes:
         for val in missing_indexes:
             input_row_short[val] = diabetes_median_array[val[0]]
-            #input_row_short[val] = np.random.normal(diabetes_mean_array[val[0]], diabetes_std_array[val[0]], 1)
     else:
         for val in missing_indexes:
             input_row_short[val] = no_diabetes_median_array[val[0]]
-            #input_row_short[val] = np.random.normal(no_diabetes_mean_array[val[0]], no_diabetes_std_array[val[0]], 1)
             
     input_row[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']] = input_row_short
             
@@ -572,6 +509,8 @@ X_train_imputed = X_train_imputed.apply(impute_nan, axis = 1)
 X_test_imputed = X_test_imputed.apply(impute_nan, axis = 1)
 ```
 
+When performing cross validation on the imputed training set, we see minimal differences in accuracy than what we saw before imputation. However, the imputation will help with some of our next steps.
+
 
 ```python
 print("Cross validation:")
@@ -583,12 +522,14 @@ for i, model in enumerate(models):
     Cross validation:
     Logistic Regression :  0.752491906463
     Naive Bayes :  0.74273602387
-    Random Forest :  0.758877094324
-    Extra Trees :  0.745921846315
+    Random Forest :  0.752412583354
+    Extra Trees :  0.752425911356
     XGBoost :  0.750773454059
     
 
 ### New Features
+
+On this step we will add features which may contribute to the accuracy of the models. First, categorical variables were added pertaining to Obesity, Hypertension, Glucose Tolerance. Next, polynomial variables were added for a few of the metrics. Finally, interaction variables were added using a few of the metrics.  
 
 
 ```python
@@ -599,7 +540,6 @@ X_test_addedColumns = X_test_imputed.copy()
 
 ```python
 ### Add new features
-
 def add_features(initial_df):  
     # Obesity
     initial_df.loc[:,'Obesity'] = 'None'
@@ -610,7 +550,7 @@ def add_features(initial_df):
                              (initial_df['BMI'] < 30), 'Obesity'] = 'Overweight'
     initial_df.loc[(initial_df['BMI'] >= 30), 'Obesity'] = 'Obese'
 
-    # Blood Pressure
+    # Hypertension
     initial_df.loc[:, 'Hypertension'] = 'None'
     initial_df.loc[(initial_df['BloodPressure'] < 80), 'Hypertension'] = 'Normal or Elevated'
     initial_df.loc[(initial_df['BloodPressure'] >= 80) & \
@@ -631,14 +571,20 @@ def add_features(initial_df):
     initial_df['BMI_squared'] = initial_df['BMI'] ** 2
     initial_df['BMI_cubed'] = initial_df['BMI'] ** 3
 
+    initial_df['Age_squared'] = initial_df['Age'] ** 2
+    initial_df['Age_cubed'] = initial_df['Age'] ** 3
+    
     initial_df['DiabetesPedigreeFunction_squared'] = initial_df['DiabetesPedigreeFunction'] ** 2
     initial_df['DiabetesPedigreeFunction_cubed'] = initial_df['DiabetesPedigreeFunction'] ** 3
 
     # Interactions
     initial_df['Pregnancies_x_Age'] = initial_df['Pregnancies'] * initial_df['Age']
+    initial_df['BP_x_Age'] = initial_df['BloodPressure'] * initial_df['Age']
     initial_df['BP_x_Glucose'] = initial_df['BloodPressure'] * initial_df['Glucose']
     initial_df['DPF_x_Glucose'] = initial_df['DiabetesPedigreeFunction'] * initial_df['Glucose']
     initial_df['BMI_x_Age'] = initial_df['BMI'] * initial_df['Age']
+    initial_df['BP_x_DPF'] = initial_df['BloodPressure'] * initial_df['DiabetesPedigreeFunction']
+    initial_df['Pregnancies_x_Glucose'] = initial_df['Pregnancies'] * initial_df['Glucose']
     
     return initial_df
     
@@ -646,10 +592,11 @@ X_train_addedColumns = add_features(X_train_addedColumns)
 X_test_addedColumns = add_features(X_test_addedColumns)
 ```
 
+Next we will standardize the numerical variables to avoid unequal contributions by variables of different scales. Also one hot encoding is used on the categorial variables to enable usage of the models. 
+
 
 ```python
 # Standardize
-
 from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
@@ -676,10 +623,11 @@ X_test_addedColumns[['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness',
 
 ```python
 # Encoding
-
 X_train_encoded = pd.get_dummies(X_train_addedColumns)
 X_test_encoded = pd.get_dummies(X_test_addedColumns)
 ```
+
+When performing cross validation on the training set with all the additional columns, we once again see minimal differences from before. However, the new features will be useful during feature selection.
 
 
 ```python
@@ -690,18 +638,20 @@ for i, model in enumerate(models):
 ```
 
     Cross validation:
-    Logistic Regression :  0.740977372492
-    Naive Bayes :  0.653167765152
-    Random Forest :  0.750825906197
-    Extra Trees :  0.747481007597
-    XGBoost :  0.749147007864
+    Logistic Regression :  0.763795342078
+    Naive Bayes :  0.706843069224
+    Random Forest :  0.755664400906
+    Extra Trees :  0.755624846835
+    XGBoost :  0.74912121173
     
 
 ### Feature Selection
 
+Performing feature selection will improve our models by removing features that don't contribute as much to predictions and by reducing overfitting. One method to perform feature selection is calulating F scores from the XGBoost classifier. The F scores provide a value of the relative importance of each feature where a higher F score corresponds to higher importance.
+
 
 ```python
-# feature importance
+# Feature Importance
 from xgboost import plot_importance
 import eli5
 from eli5.sklearn import PermutationImportance
@@ -709,13 +659,6 @@ from eli5.sklearn import PermutationImportance
 model_importance = XGBClassifier()
 
 model_importance.fit(X_train_encoded, y_train)
-
-#perm = PermutationImportance(model_importance, cv=k_folds)
-#perm.fit(X_train_encoded, y_train)
-#eli5.show_weights(perm)
-
-#plot_importance(model_importance)
-#plt.show()
 ```
 
 
@@ -731,15 +674,14 @@ model_importance.fit(X_train_encoded, y_train)
 
 
 
+As seen below, the 6 most important features towards the predictions are Glucose, BMI x Age, BMI, Insulin, Pregnancies, and Diabetes Pedigree Function x Glucose. For this analysis, we will use these 6 features for our final model.
+
 
 ```python
 feature_scores = pd.DataFrame({'Features': X_train_encoded.columns, 'F Score': model_importance.feature_importances_})
-
 sorted_features = feature_scores.sort_values('F Score', ascending = False)
-
 top_features = list(sorted_features.Features[0:6])
-
-sorted_features.head()
+sorted_features[0:6]
 ```
 
 
@@ -757,28 +699,33 @@ sorted_features.head()
   <tbody>
     <tr>
       <th>1</th>
-      <td>0.216864</td>
+      <td>0.189878</td>
       <td>Glucose</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>0.146590</td>
+      <th>20</th>
+      <td>0.132636</td>
       <td>BMI_x_Age</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.081636</td>
+      <td>0.076135</td>
       <td>BMI</td>
     </tr>
     <tr>
-      <th>16</th>
-      <td>0.076336</td>
-      <td>DPF_x_Glucose</td>
+      <th>4</th>
+      <td>0.069712</td>
+      <td>Insulin</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>0.075118</td>
-      <td>Insulin</td>
+      <th>0</th>
+      <td>0.062445</td>
+      <td>Pregnancies</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.060369</td>
+      <td>DPF_x_Glucose</td>
     </tr>
   </tbody>
 </table>
@@ -792,18 +739,21 @@ X_train_selected = X_train_encoded[top_features]
 X_test_selected = X_test_encoded[top_features]
 ```
 
+Examining the correlation matrix of these 6 features shows that none of the features are too correlated so we can stick with including all of them.
+
 
 ```python
 # Correlation Matrix
-
 plt.figure(figsize=(10, 8))
 sns.heatmap(X_train_selected.corr(), annot=True)
 plt.show()
 ```
 
 
-![png](output_32_0.png)
+![png](output_52_0.png)
 
+
+When performing cross validation now, it is quite clear that all the models perform better than they did before.
 
 
 ```python
@@ -816,17 +766,18 @@ for i, model in enumerate(models):
     Cross validation:
     Logistic Regression :  0.770325848155
     Naive Bayes :  0.752518777435
-    Random Forest :  0.770285649181
-    Extra Trees :  0.76871294493
+    Random Forest :  0.771845670334
+    Extra Trees :  0.770352289192
     XGBoost :  0.768686933829
     
 
 ### Hyperparameter Tuning
 
+We can get some further improvements by tuning hyperparameters of a few of the models. By performing random search on the Random Forest, Extra Trees, and XGBoost models, we can figure out what hyperparameters lead to the best accuracy. 
+
 
 ```python
 ### Hyperparameter Tuning
-
 from sklearn.model_selection import RandomizedSearchCV
 
 # Number of trees
@@ -855,7 +806,7 @@ xgb_random_grid = {'n_estimators': n_estimators,
 
 
 ```python
-# Grid Search for Random Forest
+# Random Search for Random Forest
 rf_random = RandomizedSearchCV(estimator = RandomForestClassifier(), \
                                param_distributions = rf_random_grid, \
                                n_iter = 200, \
@@ -868,7 +819,7 @@ rf_best_random = rf_random.best_estimator_
 
 
 ```python
-# Grid Search for Extra Trees
+# Random Search for Extra Trees
 et_random = RandomizedSearchCV(estimator = ExtraTreesClassifier(), \
                                param_distributions = rf_random_grid, \
                                n_iter = 200, \
@@ -881,8 +832,7 @@ et_best_random = et_random.best_estimator_
 
 
 ```python
-# Grid Search for XGBoost
-
+# Random Search for XGBoost
 xgb_random = RandomizedSearchCV(estimator = XGBClassifier(), \
                                param_distributions = xgb_random_grid, \
                                n_iter = 200, \
@@ -899,6 +849,8 @@ models_best = [LogisticRegression(solver = 'liblinear'), GaussianNB(), \
           rf_best_random, et_best_random, xgb_best_random]
 ```
 
+Through performing cross validation on the tuned models, we see that accuracy slightly improved for Random Forest, Extra Trees, and XGBoost.
+
 
 ```python
 print("Cross validation:")
@@ -910,64 +862,30 @@ for i, model in enumerate(models_best):
     Cross validation:
     Logistic Regression :  0.770325848155
     Naive Bayes :  0.752518777435
-    Random Forest :  0.77842948842
-    Extra Trees :  0.771964762482
-    XGBoost :  0.781775031923
-    
-
-
-```python
-print("Test Set:")
-for i, model in enumerate(models_best):
-    predictions = model.fit(X_train_selected, y_train).predict(X_test_selected)
-    accuracy = metrics.accuracy_score(y_test, predictions)
-    print(model_names[i], ": ", accuracy)
-```
-
-    Test Set:
-    Logistic Regression :  0.766233766234
-    Naive Bayes :  0.779220779221
-    Random Forest :  0.798701298701
-    Extra Trees :  0.779220779221
-    XGBoost :  0.818181818182
-    
-
-### Stacking Models
-
-
-```python
-from scipy import stats
-
-# Model Ensemble
-
-model_predict = np.zeros((len(X_train_selected), len(models_best)))
-
-for i, model in enumerate(models):
-    
-    model_predict[:, i] = cross_val_predict(model, X_train_selected, y_train, cv=k_folds)
-    
-    #model_predict[:,i] = model.fit(X_train, y_train).predict(X_test)
-    
-majority_vote = stats.mode(model_predict, axis = 1)[0]
-print(metrics.accuracy_score(y_train, majority_vote))
-```
-
-    0.770358306189
+    Random Forest :  0.780042176678
+    Extra Trees :  0.762221992923
+    XGBoost :  0.776869897202
     
 
 ### Run Test Set for Final Prediction
 
+From performing cross validation with each model, we can see that the random forest model performed the best so we will use a this model on the test set for the final prediction.
+
 
 ```python
-# Final XGB model for predictions 
-
-final_predictions = xgb_best_random.fit(X_train_selected, y_train).predict(X_test_selected)
-    
-print("Accuracy: ", round(metrics.accuracy_score(y_test, final_predictions) * 100, 1), "%")
+# Final Random Forest model for predictions 
+print("Test Set:")
+predictions = rf_best_random.fit(X_train_selected, y_train).predict(X_test_selected)
+print("Accuracy: ", round(metrics.accuracy_score(y_test, predictions) * 100, 1), "%")
 ```
 
-    Accuracy:  81.8 %
+    Test Set:
+    Accuracy:  79.9 %
     
+
+Our final predictions resulted in approximately 80% accuracy. This is about 2% higher than our predictions with the basic model! 
+
+At this point it is possible to try stacking the models and using majority vote, but resulting predictions will only be marginally different. So using the random forest model in this analysis is sufficient. 
 
 
 ```python
