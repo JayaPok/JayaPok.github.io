@@ -8,7 +8,7 @@ This post contains my work in predicting whether a patient has diabetes or not b
 
 Through my work, I was able to predict diabetes at an accuracy of approximately 80%.
 
-The dataset is provided by the National Institute of Diabetes and Digestive and Kidney Diseases. For more information and to download the dataset, the following link can be accessed https://www.kaggle.com/uciml/pima-indians-diabetes-database. To download my jupyter notebook, the following link can be accessed https://github.com/JayaPok/Pima-Indians-Diabetes.
+The dataset is provided by the National Institute of Diabetes and Digestive and Kidney Diseases. For more information and to download the dataset, the following link can be accessed at https://www.kaggle.com/uciml/pima-indians-diabetes-database. To download my jupyter notebook, the following link can be accessed at https://github.com/JayaPok/Pima-Indians-Diabetes.
 
 
 ```python
@@ -295,7 +295,7 @@ plt.show()
 ```
 
 
-![png](output_12_0.png)
+![png](/images/output_12_0.png)
 
 
 Constructing pair plots for each pair of features and for each outcome (diabetes or no diabetes) is a good technique for visualizing the training data as can be seen below. Although there is no pair of features that indicates a clear difference between patients with and without diabetes, we can start to see some of what the most useful metrics may be. 
