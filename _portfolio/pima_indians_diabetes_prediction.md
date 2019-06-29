@@ -8,7 +8,7 @@ This post contains my work in predicting whether a patient has diabetes or not b
 
 Through my work, I was able to predict diabetes at an accuracy of approximately 80%.
 
-The dataset is provided by the National Institute of Diabetes and Digestive and Kidney Diseases. For more information and to download the dataset, the following link can be accessed at https://www.kaggle.com/uciml/pima-indians-diabetes-database. To download my jupyter notebook, the following link can be accessed at https://github.com/JayaPok/Pima-Indians-Diabetes.
+The dataset is provided by the National Institute of Diabetes and Digestive and Kidney Diseases. For more information and to download the dataset, the following link can be accessed [here](https://www.kaggle.com/uciml/pima-indians-diabetes-database). To download my jupyter notebook, the following link can be accessed here(https://github.com/JayaPok/Pima-Indians-Diabetes).
 
 
 ```python
@@ -313,7 +313,7 @@ plt.show()
 ```
 
 
-![png](output_14_0.png)
+![png](/images/output_14_0.png)
 
 
 Constructing a correlation matrix is a good technique of visualizing the relationship between variables to check for multicollinearity. As seen below, none of the variables are highly correlated with each other so we won't remove any of them.
@@ -327,7 +327,7 @@ plt.show()
 ```
 
 
-![png](output_16_0.png)
+![png](/images/output_16_0.png)
 
 
 ### Basic Model Implementation
@@ -755,7 +755,7 @@ plt.show()
 ```
 
 
-![png](output_52_0.png)
+![png](/images/output_52_0.png)
 
 
 When performing cross validation now, it is quite clear that all the models perform better than they did before.
