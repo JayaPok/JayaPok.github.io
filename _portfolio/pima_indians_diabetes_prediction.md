@@ -890,4 +890,4 @@ print("Accuracy: ", round(metrics.accuracy_score(y_test, predictions) * 100, 1),
 
 Our final predictions resulted in approximately 80% accuracy. This is about 2% higher than our predictions with the basic model! 
 
-At this point it is possible to try stacking the models and using majority vote, but resulting predictions will only be marginally different. So using the random forest model in this analysis is sufficient. 
+At this point it is possible to try a method such as stacking the models and using majority vote, but resulting predictions will only be marginally different. So using the random forest model in this analysis is sufficient. 
