@@ -1,7 +1,7 @@
 # main links links
 main:
-  - title: "Projects"
-    url: /projects/
+  - title: "Data Science Projects"
+    url: /data_projects/
     
   - title: "Publications"
     url: /publications/
