@@ -1,7 +1,7 @@
 ---
 layout: archive
-title: "Projects"
-permalink: /projects/
+title: "Data Science Projects"
+permalink: /data_projects/
 author_profile: true
 ---
 
