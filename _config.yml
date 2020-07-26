@@ -248,7 +248,7 @@ defaults:
    # _articles
   - scope:
       path: ""
-      type: articles
+      type: portfolio
     values:
       layout: single
       author_profile: true
