@@ -245,10 +245,10 @@ defaults:
       layout: talk
       author_profile: true
       share: true
-   # _articles
+  # _articles
   - scope:
       path: ""
-      type: portfolio
+      type: articles
     values:
       layout: single
       author_profile: true
