@@ -8,6 +8,6 @@ redirect_from:
   - /about.html
 ---
 
-My name is Jaya and I'm a data scientist at Edison Software, a startup in the bay area. Prior to moving to the bay area, I studied biomedical engineering at Duke University. 
+My name is Jaya and I'm a data scientist in the Bay Area. I've worked and consulted for various startups in the Bay Area and currently work as a data scientist at Windfall Data. I also do volunteer data science work through the organization DataKind. Prior to moving to the Bay Area, I studied biomedical engineering at Duke University. 
 
 Feel free to explore my site! It's a work in progress so stay tuned for updates.
