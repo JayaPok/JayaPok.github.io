@@ -5,7 +5,7 @@ permalink: /publications/
 
 ### Collaborative efforts to investigate emissions from residential and municipal trash burning in India
 
-A study into the emissions resulting from roadside, residential, and muicipal trash burning in India utilizing air quality sensors in conjunction prototype combustors and drones.
+A study into the emissions resulting from roadside, residential, and muicipal trash burning in India utilizing air quality sensors in conjunction with prototype combustors and drones.
 
 [Research Brief](http://JayaPok.github.io/files/rti-pub.pdf)
  
