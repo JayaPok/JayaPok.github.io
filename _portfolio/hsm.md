@@ -11,4 +11,4 @@ From August 2019 to April 2020, I volunteered my time and technical skillset wit
 
 [Blog Post] (https://www.datakind.org/blog/advancing-alcohol-behavior-change-with-data-science)
 
-Due to the sensitive, personal nature of the HSM data that was leveraged in building the ML models, the code will not be shared. 
+Due to the sensitive, personal nature of the HSM data that was leveraged in building the ML models, the code will not be shared.
