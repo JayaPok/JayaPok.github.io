@@ -1,6 +1,6 @@
 ---
 title: "Pima Indians Diabetes Prediction"	
-excerpt: "Developed a machine learning model that uses various diagnostic metrics to predict if patients have diabetes or not."	
+excerpt: "Developed a machine learning model that uses various diagnostic metrics to predict if patients have diabetes."	
 date: 2019-07-02
 collection: portfolio
 ---
